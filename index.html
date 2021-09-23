@@ -1,1 +1,104 @@
-!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Scoreboard</title>
+
+	<style>
+
+	</style>
+	<script>
+		function l(value) {
+			console.log(value)
+		}
+		function scoreboards() {
+			return document.getElementsByClassName('scoreboard');
+		}
+		function scoreboardLoader() {
+			/*
+			const screen = 
+			[
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+				[1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+			]
+			*/
+			
+			for(let board of scoreboards()) {
+				if(board.dataset.type == 'loader') {
+					console.log('here')
+					runLoader(board)
+				}
+
+				console.log(board.dataset.type);
+			}
+		}
+
+		function runLoader(loader) {
+			// screen = [] // line // need to do
+			// screen = [[], []] // 2d
+			// screen = [
+			// 				[[]], 
+			// 				[[]],
+			// 				[[]]
+			// 		 	] // 3d
+			// screen = [...] // 4d
+
+			const screen = [1, 1, 1, 1, 1, 1, 1];
+			const screenLen = screen.length;
+			let operation = '>'
+			let currentPxs = [[1]];
+			l(currentPxs)
+			screen.forEach((px,i) => {
+				const radio = document.createElement('input');
+				radio.type = 'radio';
+				radio.id = 'loader-px-' + i;
+				radio.name = 'loader'
+				loader.appendChild(radio)
+				console.log(1);
+			})
+
+			setInterval(() => {
+				const px = document.getElementById('loader-px-' + (currentPxs[0] - 1) )
+
+				l(currentPxs)
+				if(px) {
+					px.checked = true	
+				}
+
+				// go-back loop
+				if(operation == '>') {
+					currentPxs[0] = (+currentPxs[0]) + 1
+					if(currentPxs > screen.length) {
+						operation = '<'	
+					}
+				} else if(operation == '<') {
+					currentPxs[0] = (+currentPxs[0]) - 1
+					if(currentPxs < screen.length) {
+						operation = '>'	
+					}
+				}
+
+				// go-again loop
+				// if(currentPxs > screen.length) {
+				// 	currentPxs[0] = 1
+				// } else {
+				// 	currentPxs[0] = (+currentPxs[0]) + 1	
+				// }
+			}, 250)
+		}
+
+
+		window.onload = () => {
+			scoreboardLoader();
+		}
+	</script>
+</head>
+<body>
+	<div class="scoreboard" data-type="loader"></div>
+</body>
+</html>
